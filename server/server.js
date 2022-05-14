@@ -10,6 +10,10 @@ mongoose
 //Modelo
 const Usuario = require('./models/usuario');
 
+//CORS
+const cors = require('cors');
+app.use(cors());
+
 //Enrutamiento
 app.get('/api/usuarios', (req, res) => {
     Usuario
