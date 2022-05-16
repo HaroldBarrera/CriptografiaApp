@@ -29,18 +29,7 @@ router.get('/usuario/:usuario_id', (req, res) => {
     .then(usuario => res.json(usuario));
 });
 
-router.post('/usuario/create', async (req, res) => {
-
-    /*console.log(req.body);
-    res.json(req.body);*/
-
-    /*const user = Usuario(req.body);
-
-    const userSaved = await user.save();
-
-    console.log(userSaved);
-
-    res.send('saved');*/
+router.post('/usuario/create', (req, res) => {
 
     let body = req.body;
 
