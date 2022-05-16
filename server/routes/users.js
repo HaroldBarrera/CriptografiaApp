@@ -31,15 +31,18 @@ router.get('/usuario/:usuario_id', (req, res) => {
 
 router.post('/usuario/create', async (req, res) => {
 
-    const user = Usuario(req.body);
+    /*console.log(req.body);
+    res.json(req.body);*/
+
+    /*const user = Usuario(req.body);
 
     const userSaved = await user.save();
 
     console.log(userSaved);
 
-    res.send('saved');
+    res.send('saved');*/
 
-    /*let body = req.body;
+    let body = req.body;
 
     console.log(body);
     
@@ -49,7 +52,7 @@ router.post('/usuario/create', async (req, res) => {
         }else{
             res.send('Usuario creado con exito');
         }
-    })*/
+    })
 });
 
 module.exports = router;
