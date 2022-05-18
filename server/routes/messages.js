@@ -2,6 +2,7 @@ const express = require('express');
 const Mensaje = require('../models/mensaje');
 const router = express.Router();
 
+//Algoritmo de cifrado
 const abecedario = [" ","A", "B", "C", "D", "E", 
 "F", "G", "H", "I", "J", 
 "K", "L", "M", "N", "Ñ", 
@@ -59,6 +60,24 @@ function descifrar(mensajeCifrado, llave){
     return descifra;
 }
 
+//Diffie-Hellman
+function operacionA(a, g, p){
+    let ga = Math.pow(g,a);
+    let A = ga % p;
+    return A;
+}
+
+function Diffie_Hellman(a, b, g, p){
+    let gb = Math.pow(g, b);
+    let B = gb % p;
+    //CAMBIO DE CLAVES
+    let Ba = Math.pow(B, a);
+    let k = Ba % p;
+    console.log("LLAVE GENERADA: " + k);
+    return k;
+}
+
+//Rutas del servidor
 router.get('/mensajes', (req, res) => {
     Mensaje
     .find()
@@ -77,6 +96,7 @@ router.get('/mensaje/:mensaje_id', (req, res) => {
         let llave = mensaje.llave;
         let k = parseInt(llave);
 
+        //Descifrar mensaje
         let m = descifrar(d, k);
 
         let mensajeDescifrado = {
@@ -95,8 +115,16 @@ router.get('/mensaje/:mensaje_id', (req, res) => {
 router.post('/mensaje/create', (req, res) => {
 
     let mensaje = req.body.texto;
-    let llave = req.body.llave;
-    let k = parseInt(llave);
+    
+    //Diffie hellman
+    let prime_number = Math.round(Math.random() * (50 - 1) + 1);
+    let generator = Math.round(Math.random() * (50 - 1) + 1);
+    let valorA = Math.round(Math.random() * (50 - 1) + 1);
+    let valorB= Math.round(Math.random() * (50 - 1) + 1);
+
+    let k = parseInt(Diffie_Hellman(valorA, valorB, generator, prime_number));
+
+    //Cifrar el mensaje
     let c = cifrar(mensaje.toString(), k);
 
     let men = {
