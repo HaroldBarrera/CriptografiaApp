@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import MensajeIndividual from "./MensajeIndividual";
+import { useEffect } from "react";
 
 const SendMessagePage = () => {
 
@@ -7,7 +9,28 @@ const SendMessagePage = () => {
         const [emisor, setEmisor] = useState('');
         const [receptor, setReceptor] = useState('');
         const [texto, setTexto] = useState('');
+        const [datamensajes, setdatamensajes] = useState([]);
 
+        //Lista de mensajes
+        useEffect(() => {
+            axios.get('/mensajes').then(res => {
+                console.log(res.data);
+                setdatamensajes(res.data);
+            }).catch(err => {
+                console.log(err);
+            })
+        }, []);
+
+        //Mapear listademensajes en objeto mensaje
+        const listamensajes = datamensajes.map(mensaje => {
+            return(
+                <div>
+                    <MensajeIndividual mensaje={mensaje}/>
+                </div>
+            );
+        });
+
+        //Enviar el mensaje
         function enviarMensaje(){
             var mensaje = {
                 emisor: emisor,
@@ -15,8 +38,6 @@ const SendMessagePage = () => {
                 texto: texto
             }
             console.log(mensaje);
-
-            //fetch('http://localhost:5000/mensaje/create', mensaje).then(res => res.json());
 
             axios.post('/mensaje/create', mensaje).then(res => {
                 alert(res.data);
@@ -42,6 +63,12 @@ const SendMessagePage = () => {
                 </div>
                 <br />
                 <button onClick={enviarMensaje} class="btn btn-primary">Enviar mensaje</button>
+            </div>
+            <hr className="mt-4"></hr>
+            <div>
+                <h1>LISTA DE MENSAJES</h1>
+                <hr className="mt-4"></hr>
+                {listamensajes}
             </div>
         </main>
     );

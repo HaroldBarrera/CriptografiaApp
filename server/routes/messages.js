@@ -84,6 +84,32 @@ router.get('/mensajes', (req, res) => {
     .then(allMensajes => res.json(allMensajes));
 });
 
+router.post('/vermensaje', (req, res) => {
+
+    let mensaje_id = req.body.id;
+
+    Mensaje
+    .findById(mensaje_id)
+    .then(mensaje => {
+        let d = mensaje.texto;
+        let llave = mensaje.llave;
+        let k = parseInt(llave);
+
+        //Descifrar mensaje
+        let m = descifrar(d, k);
+
+        let mensajeDescifrado = {
+            _id: mensaje_id,
+            texto: m,
+            emisor: mensaje.emisor,
+            receptor: mensaje.receptor,
+            llave: k
+        };
+
+        console.log(mensajeDescifrado);
+        res.json(mensajeDescifrado);
+    });
+});
 
 router.get('/mensaje/:mensaje_id', (req, res) => {
 
