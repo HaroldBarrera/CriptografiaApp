@@ -29,6 +29,7 @@ app.use(cors());
 app.use(require('./routes/index'));
 app.use(require('./routes/users'));
 app.use(require('./routes/messages'));
+app.use(require('./routes/tickets'));
 
 //servidor
 app.listen(app.get('port'), () => {

@@ -19,7 +19,7 @@ const VerMensajePage = () => {
             const datamensaje = res.data;
             setTexto(datamensaje.texto);
         })
-    }, []);
+    });
 
     return(
         <main className="container">
