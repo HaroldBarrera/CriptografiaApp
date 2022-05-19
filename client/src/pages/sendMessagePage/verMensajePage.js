@@ -45,7 +45,7 @@ const VerMensajePage = () => {
             <Link to="/sendmessage">
                 <button className="btn btn-warning">Volver</button>
             </Link>
-            <button onClick={() => {descargarArchivo("MensajeDescifrado.txt", mensaje.texto)}} className="btn btn-primary">Descargar</button>
+            <button onClick={() => {descargarArchivo("MensajeDescifrado.txt", texto)}} className="btn btn-primary">Descargar</button>
         </main>
     );
 };
