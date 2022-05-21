@@ -111,7 +111,7 @@ router.post('/boleto/create', (req, res) => {
         if(err){
             throw err;
         }else{
-            res.send('Boleto creado con exito');
+            res.json(ticket);
         }
     });
 });

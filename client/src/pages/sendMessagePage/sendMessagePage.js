@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import MensajeIndividual from "./MensajeIndividual";
 import { useEffect } from "react";
+import CriptoparsingPage from "../criptoparsingPage/CriptoparsingPage";
 
 const SendMessagePage = () => {
 
@@ -48,6 +49,7 @@ const SendMessagePage = () => {
     return(
         <main className="container ">
             <div>
+                <h1>CREA UN MENSAJE:</h1>
                 <div class="form-group">
                     <label for="emisor">De:</label>
                     <input type="text" class="form-control" id="emisor" placeholder="Digite su correo" value={emisor} onChange={(e) => (setEmisor(e.target.value))}/>
@@ -63,6 +65,11 @@ const SendMessagePage = () => {
                 </div>
                 <br />
                 <button onClick={enviarMensaje} class="btn btn-primary">Enviar mensaje</button>
+            </div>
+            <hr className="mt-4"></hr>
+            <div>
+                <h1>SUBE UN ARCHIVO.TXT:</h1>
+                <CriptoparsingPage />
             </div>
             <hr className="mt-4"></hr>
             <div>

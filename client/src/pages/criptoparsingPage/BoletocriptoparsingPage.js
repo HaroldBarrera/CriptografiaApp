@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 
-const CriptoparsingPage = () => {
+const BoletocriptoparsingPage = () => {
 
-  const [archivo, setArchivo] = useState(null);//Hook del archivo
+  const [archivo] = useState(null);//Hook del archivo
   const [textarea, setTextarea] = useState('');
   const [resultado, setResultado] = useState('');
 
@@ -19,33 +19,18 @@ const CriptoparsingPage = () => {
     reader.readAsText(e.target.files[0])
   }
 
-  function btnCifrar(){
-    console.log("CIFRANDO: " + textarea);
-    var mensaje = {
-      texto: textarea
-    };
-
-    console.log(mensaje);
-
-    axios.post('/mensaje/cifrar', mensaje).then(res => {
-      alert(res.data.texto);
-      var textoCifrado = res.data.texto;
-      setResultado(textoCifrado);
-    }).then(err => {console.log(err)});
-  }
-
   function btnDescifrar(){
     console.log("DESCIFRANDO: " + textarea);
     
     var mensaje = {
-      texto: textarea
+      dueño: textarea
     };
 
     console.log(mensaje);
 
-    axios.post('/mensaje/descifrar', mensaje).then(res => {
-      alert(res.data.texto);
-      var textoDescifrado = res.data.texto;
+    axios.post('/boleto/descifrar', mensaje).then(res => {
+      alert(res.data.dueño);
+      var textoDescifrado = res.data.dueño;
       setResultado(textoDescifrado);
     }).then(err => {console.log(err)});
   }
@@ -61,20 +46,19 @@ const CriptoparsingPage = () => {
     element.click();
 
     document.body.removeChild(element);
-}
+  }
 
   return(
     <>
     <div className='container bg-dark'>
       <div className="container bg-info">
-        <h1>SISTEMA DE CIFRADO-DESCIFRADO</h1>
+        <h1>DESCIFRA TU BOLETO AQUI</h1>
       </div>
       <div className="container">
         <input type="file" id="file" onChange={(e) => showFile(e)} value={archivo} className='text-light'/>
         <textarea id="contenidomensaje" value={textarea}></textarea>
       </div>
       <div className='container d-flex justify-content-center'>
-        <button className='btn btn-success' onClick={() => btnCifrar()}>CIFRAR</button>
         <button className='btn btn-warning' onClick={() => btnDescifrar()}>DESCIFRAR</button>
       </div>
       <div className='container d-flex justify-content-center'>
@@ -88,4 +72,4 @@ const CriptoparsingPage = () => {
   );
 }
 
-export default CriptoparsingPage;
+export default BoletocriptoparsingPage;

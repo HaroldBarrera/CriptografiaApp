@@ -1,10 +1,24 @@
 import { useState } from "react";
 import axios from "axios";
+import BoletocriptoparsingPage from "../criptoparsingPage/BoletocriptoparsingPage";
 
 const BoletosPage = () => {
 
     const [dueño, setDueño] = useState('');
 
+    function descargarArchivo(filename, text){
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+    
+        element.style.display = 'none';
+        document.body.appendChild(element);
+    
+        element.click();
+    
+        document.body.removeChild(element);
+    }
+    
     function generarBoleto(){
         var ticket = {
             dueño: dueño,
@@ -12,7 +26,8 @@ const BoletosPage = () => {
         console.log(ticket);
 
         axios.post('/boleto/create', ticket).then(res => {
-            alert(res.data);
+            alert(res.data.dueño);
+            descargarArchivo("boleto.txt", res.data.dueño);
         })
             .then(err => {console.log(err)});
     }
@@ -28,6 +43,10 @@ const BoletosPage = () => {
                 </div>
                 <br />
                 <button onClick={generarBoleto} className="btn btn-danger">GENERAR BOLETO</button>
+            </div>
+            <hr className="mt-4"></hr>
+            <div className="container">
+                <BoletocriptoparsingPage />
             </div>
         </>
     );
