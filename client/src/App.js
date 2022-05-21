@@ -6,7 +6,6 @@ import SendMessagePage from './pages/sendMessagePage/sendMessagePage';
 import { Routes, Route } from 'react-router-dom';
 import VerMensajePage from './pages/sendMessagePage/verMensajePage';
 import BoletosPage from './pages/boletosPage/boletosPage';
-import CriptoParsingPage from './pages/criptoparsingPage/CriptoparsingPage';
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
         <Route path='/sendmessage' element={<SendMessagePage />}/>
         <Route path='/ver/:id' element={<VerMensajePage />}/>
         <Route path='/boletos' element={<BoletosPage />}/>
-        <Route path='/criptoparsing' element={<CriptoParsingPage />}/>
 
       </Routes>
     </div>

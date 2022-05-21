@@ -37,7 +37,7 @@ const indexPage = () => {
             </div>
             <br />
             <div align="center">
-                <Link to="/sendmessage">
+                <Link to="/login">
                     <button class="btn btn-success" margin="10px">
                         CRIPTOGRAFIA
                     </button>
