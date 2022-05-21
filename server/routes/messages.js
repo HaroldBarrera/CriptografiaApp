@@ -169,4 +169,62 @@ router.post('/mensaje/create', (req, res) => {
     });
 });
 
+router.post('/mensaje/descifrar', (req, res) => {
+    let mensaje = req.body.texto;
+
+    Mensaje.findOne({texto: mensaje}, function(err, mensaje){
+        if(err){
+            throw err;
+        }else{
+            let d = mensaje.texto;
+            let llave = mensaje.llave;
+            let k = parseInt(llave);
+
+            //Descifrar mensaje
+            let m = descifrar(d, k);
+
+            let mensajeDescifrado = {
+                _id: mensaje._id,
+                texto: m,
+                emisor: mensaje.emisor,
+                receptor: mensaje.receptor,
+                llave: k
+            };
+
+            console.log(mensajeDescifrado);
+            res.json(mensajeDescifrado);
+        }
+    });
+});
+
+router.post('/mensaje/cifrar', (req, res) => {
+    let mensaje = req.body.texto;
+
+    //Diffie hellman
+    let prime_number = Math.round(Math.random() * (50 - 1) + 1);
+    let generator = Math.round(Math.random() * (50 - 1) + 1);
+    let valorA = Math.round(Math.random() * (50 - 1) + 1);
+    let valorB= Math.round(Math.random() * (50 - 1) + 1);
+
+    let k = parseInt(Diffie_Hellman(valorA, valorB, generator, prime_number));
+
+    //Cifrar el mensaje
+    let c = cifrar(mensaje.toString(), k);
+
+    let men = {
+        texto: c,
+        emisor: "No especificado",
+        receptor: "No especificado",
+        llave: k
+    }
+
+    Mensaje.create(men, (err, task) => {
+        if(err){
+            throw err;
+        }else{
+            res.send('Mensaje creado con exito');
+        }
+    });
+});
+
 module.exports = router;

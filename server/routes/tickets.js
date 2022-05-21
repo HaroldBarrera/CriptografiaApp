@@ -116,4 +116,52 @@ router.post('/boleto/create', (req, res) => {
     });
 });
 
+router.post('/boleto/descifrar', (req, res) => {
+    let mensaje = req.body.dueño;
+
+    Boleto.findOne({dueño: mensaje}, function(err, boleto){
+        if(err){
+            throw err;
+        }else{
+            let d = boleto.dueño;
+            let llave = boleto.llave;
+            let k = parseInt(llave);
+
+            //Descifrar mensaje
+            let m = descifrar(d, k);
+
+            let boletoDescifrado = {
+                _id: boleto._id,
+                dueño: m,
+                llave: k
+            };
+
+            console.log(boletoDescifrado);
+            res.json(boletoDescifrado);
+        }
+    });
+});
+
+router.post('/boleto/cifrar', (req, res) => {
+    let mensaje = req.body.dueño;
+
+    let k = parseInt(Math.round(Math.random() * (100 - 1) + 1));
+
+    //Cifrar el mensaje
+    let c = cifrar(mensaje.toString(), k);
+
+    let ticket = {
+        dueño: c,
+        llave: k
+    }
+
+    Boleto.create(ticket, (err, task) => {
+        if(err){
+            throw err;
+        }else{
+            res.send('Boleto creado con exito');
+        }
+    });
+});
+
 module.exports = router;
