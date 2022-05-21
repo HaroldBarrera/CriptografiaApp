@@ -3,9 +3,11 @@ const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const passport = require('passport');
 
 //Conexion a base de datos
 require('./database');
+require('./passport');
 
 //Settings
 app.set('port', process.env.PORT || 5000);
@@ -20,6 +22,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //CORS
 const cors = require('cors');

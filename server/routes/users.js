@@ -1,16 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
+const passport = require('passport');
 const Usuario = require('../models/usuario');
-
-
-router.get('/usuario/login', (req, res) => {
-    res.send('Login...');
-});
-
-router.get('/usuario/register', (req, res) => {
-    res.send('Register...');
-});
 
 //Usuario CRUD
 router.get('/usuarios', (req, res) => {
@@ -29,7 +20,7 @@ router.get('/usuario/:usuario_id', (req, res) => {
     .then(usuario => res.json(usuario));
 });
 
-router.post('/usuario/create', (req, res) => {
+router.post('/usuario/register', (req, res) => {
 
     let body = req.body;
 
@@ -43,5 +34,10 @@ router.post('/usuario/create', (req, res) => {
         }
     })
 });
+
+router.post('/usuario/login', passport.authenticate('local', {
+    successRedirect:'/usuarios',
+    failureRedirect:'/'
+}));
 
 module.exports = router;
