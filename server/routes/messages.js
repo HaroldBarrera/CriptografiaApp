@@ -222,7 +222,7 @@ router.post('/mensaje/cifrar', (req, res) => {
         if(err){
             throw err;
         }else{
-            res.send('Mensaje creado con exito');
+            res.json(men);
         }
     });
 });
